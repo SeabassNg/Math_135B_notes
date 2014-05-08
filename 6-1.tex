@@ -1,0 +1,98 @@
+\section*{6/1}
+  Assume that you have two independent Poisson process $N_1(t)$ with rate
+  $\lambda_1$ and $N_2(t)$ with rate $\lambda_2$. What is the probability that
+  $n$ events occur in the first process before $m$ events occur in the 2nd
+  process.\\
+
+  \noindent \underline{Example}: $\lambda_1 = 5$, $\lambda_2 = 1$, $n = 5$,
+  $m = 2$.\\
+  Let $T_i^1$ be the interarrival times for the 1st process.\\
+  Let $T_i^2$ be the interarrival times for the 2nd process.\\
+  Let $S_n^1 = T_1^1 + \ldots T_n^1$\\
+  Let $S_m^2 = T_1^2 + \ldots T_m^2$\\
+  Start with a continued Poisson process with $\lambda_1 + \lambda_2$, then
+  independently decide for each event whether it belongs to the 1st process
+  with probability $\frac{\lambda_1}{\lambda_1 + \lambda_2}$ or the 2nd process
+  with probability $\frac{\lambda_2}{\lambda_1 + \lambda_2}$. The obtained 
+  processes are independent and have the correct rates.\\
+
+  \begin{eqnarray*}
+    P(S_n^1 < S_m^1) & = & P(\text{among first $m + n -1$ events (in the 
+      combined process), $n$ or more events belong to the 1st process})\\
+      & = & \sum_{k = n}^{n + m -1} \binom{n + m -1}{k} \left(\frac{\lambda_1}
+      {\lambda_1 + \lambda_2}\right)^k 
+      \left(\frac{\lambda_2}{\lambda_1 + \lambda_2}\right)^{n + m - 1 - k}\\
+      & = & \sum_{k = 5}^6 \binom{6}{k} \left(\frac{5}{6}\right)^k\left(\frac
+        {1}{6}\right)^{6 - k}\\
+      & = & \frac{11 \cdot 5^5}{6^6}
+  \end{eqnarray*}
+  If you change $m = 1$, then our answer is $\left(\frac{5}{6}\right)^5$\\
+
+  \noindent \underline{Example}: You have 3 friends, $A, B, C$. Each will call
+    you on exponential amount of time with $exp(30min), exp(1hr), exp(2.5hr)$
+    respectively. You will go out with the first one that calls. What is
+    the probability that you go out with $A$?\\
+
+  \noindent Intepret each call as the first event in a Poisson process (rates
+    $2, 1, \frac{5}{2}$ (the units are an hour)). Note that rates are inverses
+    of your mean.\\
+
+  \noindent Let the rates be $\lambda_1, \lambda_2, \lambda_3$ respectively.\\
+    Start with ($\lambda_1 + \lambda_2 + \lambda_3$) Poisson process, distribute
+    the events with probability $\frac{\lambda_1}{\lambda_1 + \lambda_2 + 
+    \lambda_3}$, $\frac{\lambda_2}{\lambda_1 + \lambda_2 + \lambda_3}$, and
+    $\frac{\lambda_3}{\lambda_1 + \lambda_2 + \lambda_3}$ respectively.\\
+    Probability of A calling first is $\frac{\lambda_1}{\lambda_1 + \lambda_2 +
+    \lambda_3} = \frac{2}{2 + 1 + \frac{5}{2}}$.\\
+
+  \begin{theorem}
+    Given that $N(t) = k$, the conditional distribution of the arrival times,
+    $S_1, \ldots, S_k$, is distributed as order statistics of $k$ independent
+    uniform variables: the set $\{ S_1, \ldots, S_k\} = \{U_1, \ldots, U_i\}$,
+    where $U_i$ are iid uniform on $[0, t)$.\\
+  \end{theorem}
+  \begin{theorem}
+    Given that $S_k = t$, $S_1, \ldots, S_{k - 1}$ are distributed as order 
+    statistics of $k - 1$ uniform $(0, t)$ random variables.\\
+  \end{theorem}
+  \begin{proof}
+    Why? $N$ independently coins with heads probability $p$. Condition on
+    $k$ heads.\\
+    \begin{eqnarray*}
+      P(k \text{ heads occurs on specifics subset of $k$ coins} | \text{$k$ 
+      heads}) & = & \text{same for all subsets of size $k$}\\
+    \end{eqnarray*}
+  \end{proof}
+
+  \noindent \underline{Example}: Assume that passangers arrive as a Poisson
+  process with rate $\lambda$.
+  \begin{enumerate}
+    \item The only bus departs after time $T$. Compute the expected combined 
+      walking time, $W$ for all passangers.\\
+
+      \noindent If $S_1, S_2, \ldots, $ are the arrival times in $[0, 1]$, then
+      the combined waiting times, $T - S_1 + T - S_3 + \ldots$\\
+      Let $N(t)$ be the number of arrivales in $[0, t]$.\\
+      \begin{eqnarray*}
+        E(W) & = & \sum_{k = 0}^{\infty}E[W | N(T) = k] P(N(T) = k)\\
+        & = & \sum_{k  = 0}^{\infty} \ldots
+      \end{eqnarray*}
+    \item now, two buses depart, are at $T$, one at $S < T$, $EW$
+      
+      \noindent $\lambda \frac{s^2}{2} + \lambda \frac{(T - S)^2}{2}$
+
+    \item Now assume $T$(the only bus time) is $exponential(\mu)$, indpendent
+    of the passengers.\\
+
+      \noindent 
+        \begin{eqnarray*}
+          EW & = & E(W | T = t)E(T = t)\\
+            & = & \int_0^{\infty} \lambda\frac{t^2}{2}f_T(t)dt\\
+            & = & \frac{\lambda}{2} E(T^2)\\
+            & = & \frac{\lambda}{2} (Var(T) + (ET)^2)\\
+            & = & \frac{\lambda}{2} \frac{2}{\mu^2}\\
+            & = & \frac{\lambda}{\mu^2}
+        \end{eqnarray*}
+    \item Two busses now arrive as first two events in a $poisson(\mu)$ process
+    $EW = 2\frac{\lambda}{\mu^2}$
+  \end{enumerate}

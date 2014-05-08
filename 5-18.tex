@@ -1,0 +1,100 @@
+\section*{5/18}
+  \subsection*{pattern in coin tosses}
+    Coin with heads probability, $p$. Toss is repeatedly to get a sequence of
+    1s and 0s. Fix a pattern, say 1011101.\\
+    \underline{Waiting Game}: What is the expected number of tosses before you
+    get the pattern?\\
+    \underline{Horse race}: Two patterns say 1001 and 0100. What is the 
+    probability that 1001 appears first?\\
+    \underline{Markov Chain}: Fix an $l$. State spaces all patterns of length $l$.
+    Transition rule: the Markov Chain keeps track of the last $l$ symbols in coin
+    tosses.\\
+    Start with some distribution of patterns of length $l$.\\
+    Invariant distribution is very simple. Would be annoying to write the transition
+    matrix ($2^l$ states!).\\
+    Let $n \le l$, the tosses $n + 1$, $n + 2$, $\ldots$, $n + l$ are independent
+    of the starting pattern.\\
+    Therefore, for any pattern, $A$, of length $l$,
+    $$
+      \pi_A = p^k(1 - p)^{l-k}
+    $$
+    where $k$ is the number of 1s in $A$.\\
+    Assume that $B$ and $A$ are arbitrary patterns. Let $N_{B \to A}$ be the
+    number of times that the coin needs to be tossed from $B$ to get $A$. You
+    have to toss at least once.\\
+
+    \noindent \underline{Example}: Let $B = 111001$ and $A = 110$.\\
+      $111001 \to 110011 \to 100110$, so $N_{B \to A} = 2$\\
+      $111001 \to 110010 \to 100100 \to 001001 \to 010011 \to 100111 \to 
+      001110$, so $N_{B \to A} = 6$\\
+   
+    \noindent \underline{Example}: We can reformulate the waiting game to
+    $$E(\emptyset \to 1011101)$$
+    For any pattern $A$, we know that
+    $$
+      E(A \to A) = \frac{1}{\pi_A}
+    $$
+
+    \noindent\underline{Example}: $E(1011101 \to 1011101) = E(101 \to 1011101) = 
+    \frac{1}{\pi_{1011101}}$\\
+    The 101 above that is both at the beginning and the ending is 101 is called
+    an overlap.\\
+    $$
+      E( \emptyset \to 1011101 ) = E( \emptyset \to 101) + E(101 \to 1011101)
+    $$
+    \begin{eqnarray*}
+      E(\emptyset \to 101) & = & E(\emptyset \to 1) + E(1 \to 101)\\
+        & = & \frac{1}{p} + \frac{1}{\pi_{101}}\\
+      E( \emptyset \to 1011101 )  & = & \frac{1}{\pi_1} + \frac{1}{\pi_101} + 
+        \frac{1}{\pi_{1011101}}\\
+      & = & \frac{1}{p} + \frac{1}{p^2(1 - p)} + \frac{1}{5}
+    \end{eqnarray*}
+
+    \noindent\underline{Horse Race}: Let $A$ and $B$ patterns.\\
+    $$
+      P_A = P(A\text{ win}) \text{ and } P_B = P(B \text{ wins})
+    $$
+    Let $N$ be the time that the first of the two patterns appears.\\
+
+    $$
+      E(\emptyset \to A) = E(N) + p_B E(N_{B \to A})
+    $$
+    $(N_{\emptyset \to A} = N + I\{B \text{ wins}\} N_{B \to A})$\\
+    $E( \emptyset \to B) = E(N) + p_A E(A \to B)$\\
+    Then, $1 = p_a + p_b$.\\
+    For $p = \frac{1}{2}$ and $A = 1001$ and $B = 0100$.\\
+    $$
+      E(\emptyset \to A) = 16 + 2 = 18
+    $$
+    $$
+      E(\emptyset \to B) = 16 + 2 = 18
+    $$
+    $$
+      E(B \to A) = E(100 \to 1001) = E(\emptyset \to 1001) - 
+      E(\emptyset \to 100) = 18 - 8 = 10
+    $$
+    $$
+      E(A \to B) = 18 - 4 = 14
+    $$
+    Solve the system:
+    $$
+      p_A = \frac{5}{12}, p_B = \frac{7}{12}, E(N) = \frac{73}{6}
+    $$
+
+    \noindent\underline{Example}:
+      $A = 1010$, $B = 0100$\\
+      \begin{eqnarray*}
+        E(\emptyset \to A) & = & 20\\
+        E(\emptyset \to B) & = & 18\\
+        p_A & = & \frac{9}{14}\\
+      \end{eqnarray*}
+      A wins at the horse race, but loses at the waiting game. Why?
+      A probably wins more, but when loses, loses badly.\\
+
+    \noindent\underline{Example}:
+      $A = 011$, $B = 100$, $C = 001$\\
+      \begin{eqnarray*}
+        P(A \text{ beats} B) = \frac{1}{2}
+        P(B \text{ beats} C) = \frac{3}{4}
+        P(C \text{ beats} A) = \frac{2}{3}
+      \end{eqnarray*}

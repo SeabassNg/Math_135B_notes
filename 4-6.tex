@@ -1,0 +1,118 @@
+\section*{4/6}
+  \subsection*{Moment generating function}
+    $$
+      \phi(t) = E[e^{tX}] = 
+        \begin{cases}
+          \sum_{x}e^{tX}P(X=x) & \text{discrete}\\
+          \int_{-\infty}^{\infty}e^{tX}f(x)\,dx & \text{continuous}\\
+        \end{cases}
+    $$
+    \underline{Notes}: 
+    \begin{enumerate}
+      \item It doesn't always exists, i.e.
+      $$
+        f_X(x) = 
+        \begin{cases}
+          e^{-x} & x > 0\\
+          0 & x \le 0
+        \end{cases}
+      $$
+      Therefore,
+      $$
+        \phi(t) = \int_0^{\infty}e^{tx}e^{-x}\,dx = \frac{1}{1-t}
+      $$
+      only when $t < 1$.
+      \item 
+      \begin{eqnarray*}
+        E(e^{tX}) 
+        & = & E[1 + tX + \frac{1}{2}t^2x^2 + \frac{1}{6} t^3x^3 + \ldots]\\
+        & = & 1 + tE(X) + \frac{1}{2}t^2E(X^2) + \ldots
+      \end{eqnarray*}
+      Each of the $E(X^i)$ are called \textit{moments}.
+    \end{enumerate}
+    \underline{Example}: Poisson($\lambda$)\\
+      \begin{eqnarray*}
+        \phi(t) 
+        & = & \sum_{n = 0}^{\infty}e^{tn} \cdot \frac{\lambda^n}{n!}e^{-\lambda}\\
+        & = & e^{-\lambda}\sum_{n = 0}^{\infty} \frac{(e^t\lambda)^n}{n!}\\
+        & = & e^{-\lambda + \lambda e^t}\\
+        & = & e^{\lambda(e^t - 1)}
+      \end{eqnarray*}
+    \underline{Example}: Normal
+      \begin{eqnarray*}
+        \phi_X(t) 
+        & = & \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}e^{tx}e^{-x^2/2}\,dx\\
+        & = & \frac{1}{\sqrt{2\pi}}e^{\frac{1}{2}t^2}\int_{-\infty}^{\infty} e^{-\frac{1}{2}(x - t)^2}\,dx\\
+        & = & e^{\frac{1}{2}t^2}\\
+      \end{eqnarray*}
+      $$
+        -\frac{1}{2}(2tx + x^2) = \frac{1}{2}((x-t)^2 - t^2)
+      $$
+      \begin{lemma}
+        If $X_1, X_2, \ldots, X_n$ are independent and $S_n = X_1 + \ldots + 
+        X_n$, then 
+        $$
+          \phi_{S_n}(t) = E[e^{tS_n}] = E[e^{tX_1} \cdot e^{tX_2} \ldots 
+          e^{tX_n}] = \phi_{X_1}(t) \ldots \phi{X_n}(t)
+        $$
+        If $X_i$ is identically distributed as $X$, then
+        $$
+          \phi_{S_n}(t) = [\phi_X(t)]^n
+        $$
+      \end{lemma}
+      \begin{theorem}
+        \begin{enumerate}
+          \item If $\phi_X(t) = \phi_Y(t)$ for all $t$, then
+            $P(X \le x) = P(Y \le x)$ for all $x$
+          \item If $\phi_{X_n}(t) \to \phi_X(t)$ for all $t$,
+            then $P(X_n \le x) \to P(X \le x)$ for all $x$.
+        \end{enumerate}
+      \end{theorem}
+      
+      \underline{Example}:
+        Show that the sum of independent Poisson random variables
+        is Poisson.\\
+        \begin{tabular}{c c c}
+        $X_1$ & $Poisson(\lambda_1)$ & $e^{\lambda_1}(e^t - 1)$\\
+        $X_2$ & $Poisson(\lambda_2)$ & $e^{\lambda_2}(e^t - 1)$\\
+        & $\vdots$ &\\
+        $X_n$ & $Poisson(\lambda_n)$ & $e^{\lambda_n}(e^t - 1)$\\
+        \end{tabular}
+
+      $$
+        \phi_{X_1 + \ldots + X_n}(t) = e^{(\lambda_1 + \ldots + \lambda_n)(e^t - 1)}
+      $$
+      where $X_1 + \ldots X_n$ is $Poisson(\lambda_1 + \ldots + \lambda_n)$\\\\
+      \underline{Example}: Moment generating functions of $Binomial(n,p)$\\
+        $S_n = \sum_{k = 1}^n I_k$ where $I_k$ are independent and $I_k = 
+        I\{\text{success on $k$th trial}\}$\\
+        $$
+          \phi_{S_n}(t) = (e^tp + 1 - p)^n \text{  (from the fact} E[e^{tX}] = \phi_X(t) \text{)}
+        $$
+  \subsection*{Central limit theorem}
+    Assume that $X$ is a random variable with $EX = \mu$ and $Var(X) = \sigma^2$.\\
+    Let $S_n = X_1 + \ldots + X_n$, where $X_1, \ldots, X_n$ are iid as $X$.\\
+    Then,
+    $$
+      P\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \le \sqrt{n}\right) \to_{n \to \infty}
+      P(Z \le x)
+    $$
+    where $Z \in N(0,1)$
+    \begin{proof}
+      $Y_i = \frac{X_i - \mu}{\sigma}$\\
+      $E(Y_i) = 0$ and $Var(Y_i) = 1$\\
+      Let $\frac{S_n - n\mu}{\sigma} = Y_1 + \ldots + Y_n$.\\
+      We want to show that $\phi_{(Y_1 + \ldots + Y_n)/\sqrt{n}}(t) \to \phi_Z(t)$\\
+      \begin{eqnarray*}
+        \phi_{(Y_1 + \ldots + Y_n)/\sqrt{n}}(t) & = &
+        E[e^{t \frac{Y_1 + \ldots + Y_n}{\sqrt{n}}}]\\
+        & = & E[e^{\frac{t}{\sqrt{n}}}(Y_1 + \ldots + Y_n)]\\
+        & = & E[e^{\frac{t}{\sqrt{n}}Y_1}] \ldots E[e^{\frac{t}{\sqrt{n}}Y_n}]\\
+        & = & E[e^{\frac{t}{\sqrt{n}}Y_1}]^n\\
+        & = & \left(1 + \frac{t}{\sqrt{n}}EY + \frac{1}{2}\frac{t^2}{n} E(Y^2) + 
+          \frac{1}{6}\frac{t^3}{n^{3/2}} E(Y^3) + \ldots \right)^n\\
+        & = & 1 + 0 + \frac{1}{2}\frac{t^2}{n}(1) + \frac{1}{6}\frac{t^3}{n^{3/2}} E(Y^3) + \ldots)^n\\
+        & \approx & (1 + \frac{t^2}{2} \frac{1}{n})^n\\
+        & \to & e^{\frac{t^2}{2}}
+      \end{eqnarray*}
+    \end{proof}

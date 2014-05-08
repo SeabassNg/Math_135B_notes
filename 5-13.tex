@@ -1,0 +1,108 @@
+\section*{5/13}
+  \subsection*{Markov Chain examples continued}
+    \underline{Example}: A production process can be in 4 states labeled 1, 
+    2, 3, 4.\\
+    On 1 or 2, it's up. Otherwise, it's down.\\
+    Suppose that the transition matrix is
+    $$
+      P = \left(
+      \begin{array}{cccc}
+        \frac{1}{4} & \frac{1}{4} & \frac{1}{2} & 0\\
+        0 & \frac{1}{4} & \frac{1}{2} & \frac{1}{4}\\
+        \frac{1}{4} & \frac{1}{4} & \frac{1}{2} & \frac{1}{4}\\
+        \frac{1}{4} & \frac{1}{4} & 0 & \frac{1}{2} \\
+      \end{array}      \right)
+    $$
+    \begin{enumerate}
+      \item Compute average length of time system remains up.
+      \item Compute proportion of time system up, then down the next time.
+    \end{enumerate}
+    \begin{enumerate}
+      \item
+    If you solve
+    $$
+      [\pi_1, \pi_2, \pi_3, \pi_4] P = [\pi_1, \pi_2, \pi_3, \pi_4]
+    $$
+    with $\pi_1 + \pi_2 + \pi_3 + \pi_4 = 1$, you'll
+    get $\pi_1 = \frac{3}{16}$, $\pi_2 = \frac{1}{4}$, $\pi_3 = \frac{14}{48}$,
+    $\pi_4 = \frac{13}{48}$.\\
+    Let $\mu$ be the average stretch of time system is up and $d$ be the average
+    is down.\\
+    Proportion of time up = $\frac{\mu}{\mu + d} = \pi_1 + \pi_2$.
+      \item $\pi_1(P_{13} + P_{14}) + \pi_2 (P_{23} + P_{24}) = \frac{9}{32}$
+        is the breakdown rate. Since there is a single breakdown in stretch of
+        time up then down.
+      \item Now, solve for $\mu = \frac{N}{9}$ and $d = 2$.
+    \end{enumerate}
+
+  \underline{Example}: Random walk on a graph.\\
+    (figure 7)\\
+    $$
+    P = \left(\begin{array}{cccc}
+        0 & \frac{1}{2} & \frac{1}{2} & 0\\
+        \frac{1}{3} & 0 & \frac{1}{3} & \frac{1}{3}\\
+        \frac{1}{3} & \frac{1}{3} & 0 & \frac{1}{3}\\
+        0 & \frac{1}{2} & \frac{1}{2} & 0
+      \end{array}\right)
+    $$
+    By symmetry, we expect $\pi_1 = \pi_4$ and $\pi_2 = \pi_3$. What do we 
+    mean by symmetry?
+    Let 
+    $$
+     Q_n = \left(\begin{array}{cccc}
+      0 & 0 & 0 & 1\\
+      0 & 1 & 0 & 0\\
+      0 & 0 & 1 & 0\\
+      1 & 0 & 0 & 0\\
+      \end{array}\right)
+     Q_n^{-1}
+    $$
+    By Symmetry, we have $Q_n^{-1}PQ_n = P$.\\
+    Then, $\pi P = \pi \Rightarrow \pi Q_n^{-1}PQ_n = \pi
+    \Rightarrow \pi Q_n^{-1} P = \pi Q_n^{-1}$.\\
+    By uniqueness of $\pi$, $\pi = \pi Q_{n}-1 = \pi Q_{n}$.
+    then, $(\pi_1, \pi_2, \pi_3, \pi_4) = (\pi_4, \pi_2, \pi_3, \pi_1)$, which
+    implies that $\pi_1 = \pi_4$. Likewise, for $\pi_2 = \pi_3$.\\
+    \begin{eqnarray*}
+      \pi_1 & = & \frac{1}{3}\pi_2 + \frac{1}{3}\pi_3\\
+      \pi_2 & = & \frac{1}{2}\pi_1 + \frac{1}{3}\pi_3 + \frac{1}{2}\pi_4\\
+      \pi_3 & = & \frac{1}{2}\pi_1 + \frac{1}{3}\pi_2 + \frac{1}{2}\pi_4\\
+      \pi_1 & = & \frac{1}{3}\pi_2 + \frac{1}{3}\pi_3\\
+      \pi_1 = \frac{2}{3}\pi_2\\
+      1 & = & 2\pi_1 + 2\pi_2\\
+      \pi_2 = \frac{3}{10}\\
+      \pi_1 = \frac{1}{5}\\
+    \end{eqnarray*}
+    \underline{Question}:
+    $$
+      E(\text{returned to 1} | X_0 = 1) = \frac{1}{\pi_1} = 5
+    $$
+    \subsection*{Renewal theory}
+      Suppose $f_k \ge 0$ with $k \in \{ 1, \ldots, N \}$ such that
+      $\sum_{k = 1}^N f_k = 1$.\\
+      Define a Markov Chain (a renewal chain)
+      (Figure 8)
+      \begin{eqnarray*}
+        P_{0k} & = & \frac{f_k}{1 - \sum_{l = 1}^{k} f_l} \forall k > 0\\
+        P_{00} & = & f_1\\
+        P_{01} & = & 1 - f_1 \\
+        P_{k(k+1)} & = & \frac{P_{(k-1)k} - f_{k+1}}{P_{(k-1)k}}\\
+      \end{eqnarray*}
+      Suppose that $f_k$ is chosen to make chain aperiodic.\\
+      For aperiocity, we require that $gcd(k, f_k > 0) = 1$.\\
+      Calculate if $P($ first return to 0 is from $k$) = $f_k$, then
+      $m_0 = \sum_{k=1}^N kf_k = \mu$.\\
+      Calculate $P_{00}^n$ return to 0 after exactly $n$ steps.\\
+      We get by conditioning to 0,
+      $$
+        P_{00}^n = \sum_{k = 1}^n f_k P_{00}^{n-k} \text{ for } n \le N
+      $$
+      Otherwise,
+      $$
+        P_{00}^n = \sum_{k = 1}^N f_kP_{00}^{n-k}
+      $$
+      Chain irreducible, aperiodic implies that
+      $$
+        \lim_{n \to \infty} P_{00}^n = \frac{1}{m_0} = \frac{1}{\mu}
+      $$
+

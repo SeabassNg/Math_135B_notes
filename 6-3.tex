@@ -1,0 +1,51 @@
+\section*{6/3}
+  \underline{Exercise 7.9}
+    You have two machines. $M_1$ has lifetime $exp(\lambda_1)$ and $M_2$
+    has lifetime $exp(\lambda_2)$. Let their lifetimes be $T_1$ and $T_2$.\\
+    Machine 1 starts at time 0 and Machine 2 starts at time $t$.
+    \begin{eqnarray*}
+      P(\text{Machine 1 is the 1st to fail}) 
+      & = & P(T_1 < T_2 + t)\\
+      & = & P(T_1 < t)  + P(T_1 \ge t, T_1 < T_2 + t)\\
+      & = & P(T_1 < t) + P(T_1 < T_2 + t |] T_1 \ge t) P(T_1 \ge t)\\
+      & = & 1 - e^{-\lambda_1 t} + P(T_1 - t < T_2 | T_1 \ge t) e^{-\lambda_1 t}\\
+      & = & 1 - e^{-\lambda_1 t} + P(T_1 < T_2) e^{-\lambda_1 t} \text{ (Memoryless probability.)}\\
+      & = & 1 - e^{-\lambda_1 t} + \frac{\lambda_1}{\lambda_1 + \lambda_2} 
+        e^{-\lambda_1 t} \text{ (Poisson process)}
+    \end{eqnarray*}
+    What if we replace $t$ with $T$, exponential (and independent of $T_1, T_2$)
+    with parameter $\mu$?\\
+    \begin{eqnarray*} 
+      P(T_1 < T_2 + T)
+      & = & P(T_1 < T) + P(T_1 \ge T, T_1 < T_2 + T)\\
+      & = & \frac{\lambda_1}{\lambda_1 + \mu} + \frac{\lambda_1}{\lambda_1 + 
+        \lambda_2}\frac{\mu}{\lambda_1 + \lambda_2}\\
+    \end{eqnarray*}
+  \underline{Example}: Hitchhiker's problem. You have $A$ and $B$. Cars that
+  would pick up a hitchhiker approximately at a Poisson process at rate 
+  $\lambda_0$. $A$ is first in line.\\
+  After $exp(\lambda_A)$ time, $A$ quits.\\
+  After $exp(\lambda_B)$ time, $B$ quits.\\
+  \begin{eqnarray*}
+    P(\text{A gets picked})
+    & = & \frac{\lambda_{c}}{\lambda_{A} + \lambda_{c}}\\
+    P(\text{B gets picked})
+    & = & P(\text{at least 2 cars arrives before B quits} \bigcup \text{A quits
+    and at least one car arrives before B quits})\\
+    & = & P(\text{at least 2 cars arrives before B quits}) + P(\text{A quits
+    and at least one car arrives before B quits}) - P(\text{A quits and at least
+    2 cars arrive before B quits})\\
+    & = & \left(\frac{\lambda_c}{\lambda_B + \lambda_c}\right)^2 + \left(
+      \frac{\lambda_A}{\lambda_A + \lambda_B + \lambda_c}\right) \left(
+      \frac{\lambda_c}{\lambda_A + \lambda_B + \lambda_c}\right) - \left(
+      \frac{\lambda_A}{\lambda_A + \lambda_B + \lambda_c}\right) \left(
+      \frac{\lambda_c}{\lambda_A + \lambda_B + \lambda_c}\right)^2\\
+    & = & \frac{\lambda_A + \lambda_c}{\lambda_A + \lambda_B + \lambda_C} \cdot
+      \frac{\lambda_C}{\lambda_B + \lambda_C}
+  \end{eqnarray*}
+  Better way:
+  \begin{eqnarray*}
+    P(\text{B gets picked})
+    & = & P(\text{first event is either $A$ or $C$ and next event among $B$ and
+      $C$ only has to be C})
+  \end{eqnarray*}

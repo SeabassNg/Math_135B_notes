@@ -1,0 +1,78 @@
+\section*{5/15}
+  \begin{theorem}[Erdos, Feller, Pollard]
+  Given $f_1, \ldots f_n \ge 0$ such that $\sum_{i = 1}^N f_i = 1$.\\
+  Define $\mu = \sum_{i = 1}^ni f_i$
+  Assuming $gcd(k | f_k > 0) = 1$, then $\lim_{n \to \infty} u_n = \frac{1}{\mu}$.\\
+  \end{theorem}
+  \underline{Example}: Roll a fair die forever. Let $S_m$ be sum of first $m$ rolls.\\
+  Let $P_n = P(S_m \text{ even equals} n)$.\\
+  Estimate $P_{10000}$.\\
+  \begin{eqnarray*}
+    P_n & = & 0 \\
+    P_0 & = & 1 \\
+    & \vdots & \\
+    P_n & = & \frac{1}{6}(P_{n-1} + \ldots + P_{n-6})\\
+    f_k & = & \frac{1}{6} \text{ for } k \in \{ 1, \ldots, 6\}\\
+    \mu & = & \sum_{i = 1}^6 \frac{i}{6}\\
+      & = & \frac{7}{2}
+  \end{eqnarray*}
+  Then, 
+  $$
+    \lim_{n \to \infty} P_n = \frac{1}{\mu} = \frac{2}{7}
+  $$
+  \subsection*{Parrondo's Paradox}
+    Consider games, $A, B, C$ with parameters, $p, p_1, p_2, \gamma$, which
+    are each probabilities themselves and $M \ge 2$.\\
+    \underline{Game A}: assymetric simple random walk
+    \begin{itemize}
+      \item + 1 to capital with probability $p$
+      \item - 1 to capital wiht probability $1 - p$
+    \end{itemize}
+    Losing game if $p < \frac{1}{2}$.\\
+    \underline{Game B}: Winning probabilities depend on whether your capital
+    is divisible by $M$.\\
+    If $M | capital$, then + 1 with probability $p_1$ and - 1 with probability 
+    $1 - p_1$.\\
+    If $M \not| capitals$, then +1 with probability $p_2$ and -1 with probability
+    $1 - p_2$.\\
+    \underline{Game C}: At each step with probability $\gamma$ play game A and
+    probability $ 1 - \gamma$ to play game B.\\
+    \underline{Question}: If A and B are losing, can $C$ be winning? Yes!\\
+    First, we analyze game B.\\\\
+    \begin{center}\underline{Analysis of Game B}\end{center}
+    By Gambler's ruin, $M < x < 2M$,
+    $$
+      P_x(\text{walk hits $2M$ before M}) = \frac{1 - \left(\frac{1 - P_2}{P_2}
+      \right)^x}{1 - \left(\frac{1 - P_2}{P_2}\right)^M}
+    $$
+    Starting on a multiple of $M$,
+    $$
+      P_M = P_1 \frac{1 - \left(\frac{1 - P_2}{P_2}\right)}{1 - \left(\frac{1
+      - P_2}{P_2}\right)^M}
+    $$
+    Call the equation above, (1).\\
+    The probability that you decrease your capital by $M$ before increasing by $M$ or
+    returning to initial point is 
+    $$
+      (1 - p_1) \frac{\left(\frac{1 - P_2}{P_2}\right)^{M-1} - 
+      \left(\frac{1 - P_2}{P_2}\right)^M}{1 - \left(\frac{1 - P_2}{P_2}\right)^M}
+    $$
+    Call the equation above, (2).\\
+    So, game B is losing if $(2) / (1) > 1$ or equivalently,
+    $$
+      \frac{(1 - p_1)(1 - p_2)^{M - 1}}{P_1 P_2^{M - 1}} > 1
+    $$
+    \begin{center}\underline{Analysis of Game C}\end{center}
+    Observe that it is the same as game B with probability
+    \begin{eqnarray*}
+      q_1 & = & \gamma p + (1 - \gamma) p_1\\
+      q_2 & = & \gamma p + (1 - \gamma) p_1\\
+    \end{eqnarray*}
+    So, C is winning if
+    $$
+      \frac{(1 - q_1)(1 - q_2)^{M - 1}}{q_1 q_1^{M -1}} < 1
+    $$
+    Choosing $p = \frac{5}{11}$, $p_1 = \frac{1}{11^2}$, $p_2
+    = \frac{10}{11}$, $\gamma = \frac{1}{2}$, and $M = 3$ gives
+    $\frac{6}{5} > 1$ for game B. Basically, you lose.\\
+    For game C, $\frac{217}{300} < 1$, so win.

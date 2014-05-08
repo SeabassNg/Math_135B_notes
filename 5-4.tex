@@ -1,0 +1,71 @@
+\section*{5/4}
+  \subsection*{Branching Process}
+    Given $X_n = l$, $X_{n+1} = S_1 + \ldots + S_l$ where $S_i$ are
+    iid with probability mass function given by $P_k$.\\
+    Let $\pi_0$ be the probability that the process goes extinct and
+    $P(X_n = 0)$ the population is extinct by time $n$.
+    $\pi_0 = P(X_n = 0$ for some $n) = \lim_{n \to \infty} P(X_n = 0)$
+    Compute $M_n = E(X_n)$ and $V_n = Var(X_n)$
+    Using the equation above, 
+    $$
+      M_{n+1} = M_n\mu
+    $$ and 
+    $$
+      V_{n+1} = M_n \sigma^2 + V_n\mu^2
+    $$
+    where $\mu = \sum_{k = 0}^{\infty} kP_k = EX_1$, $\sigma^2 =
+    Var(X_1)$, $M_0 = 1$, and $V_0 = 0$. If we solve the recurrence,
+    $$
+      M_n = \mu^n
+    $$
+    Then,
+    In conclusion, $P(X_n \ge 1) \le EX_n = \mu^n$, so if
+    $\mu < 1$, then $P(X_n \ge 1) \to 0$ and so $P(X_n = 0) \to 1$.\\
+    Interpretation: If each family does not have on average, one 
+    child, you will go extinct over time.\\
+    As for the Variance,
+    \begin{eqnarray*}
+      V_{n + 1} & = & M_n \sigma^2 + V_n \mu^2\\
+        & = & \mu^n\sigma^2 + V_n \mu^2\\
+      V_n & = & A\mu^n\\
+      A & = & \frac{\sigma^2}{\mu(1 - \mu)} \text{ given that } \mu 
+        \not= 1\\
+      V_n & = & \frac{\sigma^2}{\mu(1-\mu)} \mu^n + B\mu^{2n}\\
+    \end{eqnarray*}
+    From $V_0 = 0$, $B = -A$, $V_n = \frac{\sigma^2}{\mu(1 - \mu)}
+      \mu^n - \frac{\sigma^2}{\mu(1 - \mu)}\mu^{2n}$, $u \not= 1$.\\
+    If $\mu = 1$, then $V_n = n\sigma^2$ and $M_n = 1$.\\\\
+
+  \subsection*{Moment generation function}
+    $$
+      \phi_{X_n}(s) = \sum_{k = 0}^{\infty} P(X_n = k) s^k = 
+        E[s^{X_n}]
+    $$
+    where $0 \le s \le 1$.\\
+    \underline{Example}: The previous branching process example
+      (probability of species going extinct).\\
+    $$
+      \phi(s) = \phi_{X_1}(s)\\
+        = \sum_{k = 0}^{\infty}P_k s^k
+    $$
+    \begin{eqnarray*}
+      \phi_{X_2}(s) & = & E[s^{X_2}]\\
+        & = & \sum_{k = 0}^{\infty} E[s^{X_2} | X_1 = k] P(X_1 = k)\\
+        & = & \sum_{k = 0}^{\infty} E[s^{S_1 + \ldots + S_k}]
+          P(X_1 = k)\\
+        & = & \sum_{k = 0}^{\infty}(E(s^{S_1})E(s^{S_2})\ldots 
+          E(s^{S_k}) P(X_1 = k)\\
+        & = & \sum_{k = 0}^{\infty} \phi(s)^k P_k\\
+        & = & \phi(\phi(s))
+    \end{eqnarray*}
+    As we can see,
+    $$
+      \phi_{X_n}(s) = \phi(\phi\ldots (\phi(s)) \ldots ) = 
+        \phi(\phi_{X_{n-1}}(s))
+    $$
+
+    \noindent\underline{Example}: Iteration of maps, "cobwebbing"
+    Given $y = f(x)$ and $y = x$, keep iterating through. Take
+    If $x_{n + 1} = f(x_n)$, then if $x_n$ converges, it must 
+    converge to some point of $f$.\\
+    Famous chaotic iterative maps, $f(x) = 4x(1 - x)$

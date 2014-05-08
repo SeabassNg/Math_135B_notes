@@ -1,0 +1,45 @@
+\section*{4/17(discussion)}
+  Prove
+  $$
+    \lim_{n \to \infty} e^{-n} \sum_{n \to \infty}\frac{n^k}{k!} = \frac{1}{2}
+  $$
+  We're going to use Central limit theorem. to use cental limit theorem,
+  you need to realize
+  $$
+    X_n = \sum_{i = 1}^n Y_i
+  $$
+  The former is Poisson($n$), while $Y_i$ is Poisson($1$).\\
+  \underline{Fact}: $A$ and $B$ are Poisson with parameters $a$ and $b$ 
+    respectively, then $A+B$ is Poisson with Poisson$(a+b)$.\\
+  \begin{proof}
+    \begin{eqnarray*}
+      P(A+B \le n) & = & \sum_{l = 0}^n P(A = l, B= n-l)\\
+        & = & \sum_{l = 0}^n P(A = l)P(B= n-l) \text{ (Remember, iid)}\\
+        & = & \sum_{l = 0}^n e^{-a}\frac{a^l}{l!} \cdot e^{-b}\frac{b^{n-l}}{(n-l)!}\\
+        & = & e^{-a - b}\frac{(a+b)^n}{n!}\\
+    \end{eqnarray*}
+  \end{proof}
+  Therefore, $EX_n = n$ and $Var(X_n) = n$ since $EY_i = 1$ and $Var(Y_i) = 
+  1$.\\
+  By the central limit theorem
+  $$
+    P\left(\frac{X_n -n}{\sqrt{n}} \le 0 \right) \to \Phi(0) = \frac{1}{2}
+  $$
+
+\subsection*{3.41}
+  Let $X$ be a random variable describing total time to exit
+  \underline{Idea}: Define random variable, 
+  $$
+    I = 
+    \begin{cases}
+      1 & \text{left}\\
+      0 & \text{right}\\
+    \end{cases}
+  $$
+  \begin{eqnarray*}
+    E(x) & = & E(E(X |I))\\
+      & = & E(X | I = 0)P(I = 0) + E(X |I = 1)P(I = 1)\\
+      & = & \sum_{x}xP(X = x | I = 0)P(I = 0) + \sum_{x}xP(X = x | I = 1)P(I = 1)\\
+      & = & \sum_{x}x\frac{P(X = x, I = 0)}{P(I = 0)}P(I = 0) + \sum_{x}x\frac{P(X = x, I = 1)}{P(I = 1)}P(I = 1)\\
+      & = & \sum_{x}xP(X = x, I = 0) + \sum_{x}xP(X = x, I = 1)\\
+  \end{eqnarray*}

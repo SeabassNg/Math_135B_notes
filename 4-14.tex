@@ -1,0 +1,79 @@
+\section*{4/14}
+  Sums with random number of terms.
+  $$
+    X_1, X_2, \ldots
+  $$
+  Say the terms are iid.\\
+  Let $N$ be the another (nonnegative integer) random variable, 
+  independent of $X_i$.\\
+  We want to find out $E(S)$ and $Var(S)$ if $S = \sum_{i = 0}^NX_i$\\
+  $$
+    E[S| N = n] = nE(X_1)
+  $$
+  Then,
+  \begin{eqnarray*}
+    E[S] & = & \sum_{n = 0}^{\infty}nE(X_1)P(N=n)\\
+      & = & E(X_1)E(N)
+  \end{eqnarray*}
+  Now, the variance
+  \begin{eqnarray*}
+    E(S^2) & = & \sum_{n = 0}^{\infty} E[S^2 | N = n]P(N = n)\\
+      & = & \sum_{n = 0}^{\infty} E((\sum_{i = 1}^n X_i)^2)P(N= n)\\
+      & = & \sum_{n = 0}^{\infty} ((Var(\sum_{i = 1}^n X_i))+(E(\sum_{i = 1}^nX_i))^2)P(N=n)\\
+      & = & \sum_{n = 0}^{\infty} [nVar(X_1) + n^2(EX_1)^2]P(N = n)\\
+      & = & Var(X_1)E(N) + E(X_1)^2 E(N^2)\\
+  \end{eqnarray*}
+  Therefore,
+  \begin{eqnarray*}
+    Var(S) & = & E(S^2) - (ES)^2\\
+      & = & Var(X_1)E(N) + (EX_1)^2E(N^2) - (EX_1)^2(EN)^2\\
+      & = & Var(X_1)E(N) + (EX_1)^2Var(N)
+  \end{eqnarray*}
+
+  \noindent\underline{Example}: Toss a fair coin until 1st heads. Each time
+     you toss tails, roll a die, collect as many dollar as the number on the 
+     die. Let $Y$ be your total winnings. Compute $EY$ and $Var(Y)$.\\
+
+     $$
+      EX_1 = \frac{7}{2}
+     $$
+     $$
+      E(X_1^2) = \frac{1}{6}(1^2 + \ldots + 6^2)
+     $$
+     $$
+      Var(X_1) = \ldots = \frac{35}{12}
+     $$
+     Let $N$ be the number of failures before successs, which is a geometric
+     random variable - 1.\\
+     $EN = 2 - 1 = 1$.\\
+     $Var(N) = \frac{\frac{1}{2}}{\left(1- \frac{1}{2}\right)^2} = 2$
+     Plug in and get $Var(Y) = \frac{59}{12}$.
+
+  \subsection*{Markov Chains}
+    Consider the following experiments with a book:
+    \begin{enumerate}
+      \item Pick letters at random and do it random in sucession.
+      \item Start by a random letter. Next, pick a letter at random such that
+        it succeeds the previous letter, and repeat.
+      \item Start the same way. Next, pick a letter at random from letters
+        which are at or after, in alphabetical order, the position of the
+        previous letter.
+    \end{enumerate}
+    \begin{definition}
+      Let $X_0, X_1, \ldots$ be a sequence of random variables. This is 
+      called a \underline{Markov Chain} if the distribution of $X_{n+1}$
+      (where $n = 0, 1, \ldots$ only depends on the value of $X_n$.
+    \end{definition}
+    \underline{Note}: We will often assume that the possible values of $X_n$ be 
+      non-negative integers. This means that $X_n$ has countably many values.
+
+    \noindent The information about the process is given by the 
+      \underline{transition probabilities},
+      $$
+        P_{ij} = P(X_{n+1} = j | X_n = i)
+      $$
+      "Given at stage $n$, we are in state $i$, we move to state $j$ in
+      the next state."\\
+      \underline{Note}: $P_{ij}$ does not depend on $n$.\\
+      \underline{Note}: $P_{ij}\ge 0$, $\sum_j P_{ij} = 1$.
+

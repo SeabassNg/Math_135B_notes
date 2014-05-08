@@ -1,0 +1,78 @@
+\section*{4/24}
+  If $j$ is not accessible from $i$, then
+  $P_{ij}^n = 0$ $\forall n$.\\
+  \begin{eqnarray*}
+    P(\text{ ever visit } j | X_0 = i)
+    & = & P(\bigcup_{n = 0}^{\infty} \{ X_n = j\} | X_0 = i)\\
+    & \le & \sum_{n = 0}^{\infty}P(X_n = j | X_0 = i) = 0
+  \end{eqnarray*}
+  Also, note that accessibility, etc..., the site of elements in $P$ does not
+  matter, all that matters is which are positive and which 0.\\
+  If the chain has $M$ states, then $j$ is accessible from $i$ iff for some
+  $n \le M(P + P^2 + \ldots + P^m)_{ij} > 0$\\
+  The communication relation "$\leftrightarrow$" is an equivalence relation
+  \begin{enumerate}
+    \item $i \leftrightarrow i$
+    \item $i \leftrightarrow j$ implies $j \leftrightarrow i$
+    \item $i \leftrightarrow j$ and $j \leftrightarrow i$ implies $i 
+      \leftrightarrow k$
+  \end{enumerate}
+  To prove (3), it is enough to prove
+  $$
+    (i \rightarrow j) \text{ and } (j \rightarrow k) \text{ implies }
+    i \rightarrow k
+  $$
+  This holds because
+  $\exists n$ so that $P_{ij}^n > 0$\\
+  $\exists n$ so that $P_{ij}^m > 0$\\
+  Then, $P_{ik}^{m + n} > 0$\\
+  This relation divides states into \underline{classes} within a class, all
+  states communicate to each other. This chain is \underline{irreducible}
+  if there is only one class. (If we have $m$ states, that means all entries of $I + P
+  + \ldots + P^M$ are positive)
+
+  \noindent\underline{Example}:
+    $$
+      P = \left[\begin{array}{c c c}
+        \frac{1}{2} & \frac{1}{2} & 0\\
+        \frac{1}{2} & \frac{1}{4} & \frac{1}{4}\\
+        0 & \frac{1}{3} & \frac{2}{3}
+      \end{array}\right]
+    $$
+    As we can see, $0 \leftrightarrow 1$, $1 \leftrightarrow2$, so irreducible.
+
+  \noindent\underline{Example}:
+    $$
+      P = \left[\begin{array}{c c c c}
+        \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+        \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+        0 & 0 & 0 & 1\\
+      \end{array}\right]
+    $$
+
+  For any state $i$, denote
+  $$
+    f_i = P(\text{ ever reenter } i | X_0 = i)
+  $$
+  We call a state \underline{recurrent} if $f_i = 1$.\\
+  We call a state \underline{transient} if $f_i < 1$.\\
+
+  \noindent From previous example, $f_2 = \frac{1}{4}$, so 2 is 
+    transient.\\
+    $f_3 = 1$, so 3 is recurrent.
+    $f_0 = 1$ because the only possibility that it isn't recurrent
+      is if we go to state $1$ and stay there forever. As $n \to
+      \infty$, $\left(\frac{1}{2}\right)^n = 0$, so the probability
+      of it staying at 1 is 0. Therefore, it's 1.\\
+    $f_1 = 1$ by similar logic as above.\\
+    Therefore, $f_0$ and $f_1$ are recurrent states.\\
+
+  The Markov Chain visits a recurrent state infinitely many times, or
+  not at all. (starting from an arbitrary state).\\
+  On the other hand,
+  $$
+    P(\text{reenter $i$ exactly $n$ times} | X_0 = i) = f_i^{n-1}(1 - f_i)
+  $$
+  Therefore, the number of times spent at $i$ is a geometric random variable
+  with success(which is never returning in this case) probability of
+  $1 - f_i$, so our expectation is $\frac{1}{1-f_i}$.

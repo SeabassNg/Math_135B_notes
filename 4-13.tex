@@ -1,0 +1,92 @@
+\section*{4/13}
+  \subsection*{Gambler's ruin}
+    Every round, you either win a dollar with probability, $p$. otherwise,
+    you lose a dollar.\\
+    What is my probability that I will reach $N$ before I hit 0?\\
+    Let $P_i = P($ reaching $N$ before reaching 0$)$.\\
+    Let $X_1 = \begin{cases} 
+      1 & \text{win a dollar on 1st round}\\
+      -1 & \text{lose a dollar on 1st round}\\
+    \end{cases}$\\
+    Let 
+    \begin{eqnarray*}
+      P_i & = & P(\text{reach $N$ before reaching 0} | X_1 = 1)P(X_1 = 1) + 
+        P(\text{reach $N$ before reaching 0} | X_1 = -1)P(X_1 = -1)\\
+        & = & P_{i+1}p + P_{i-1}(1-p)
+    \end{eqnarray*}
+    This is a recurrence relation.\\\\
+    \begin{eqnarray*}
+      P_2 - P_1 & = & \frac{1 - p}{p} P_1\\
+      P_3 - P_2 & = & \frac{1 - p}{p} (P_2 - P_1) = \left(\frac{1 - p}{p}\right)^2  P_1\\
+      & \vdots &\\
+      P_i - P_{i-1} & = & \left(\frac{1 - p}{p}\right)^{i-1} P_1 \text{ where }
+      i = 1, \ldots, N\\
+    \end{eqnarray*}
+    We know that $P_0 = 0$ and $P_N = 1$.\\
+    We also know that
+    \begin{eqnarray*}
+      P_i - P_1 & = & \left( \left(\frac{1-p}{p}\right) + \left(\frac{1-p}{p}\right)^2 + \ldots + \left(\frac{1-p}{p}\right)^{i-1}\right)P_1\\
+      P_i & = & \left( 1+ \left(\frac{1-p}{p}\right) + \left(\frac{1-p}{p}\right)^2 + \ldots + \left(\frac{1-p}{p}\right)^{i-1}\right)P_1\\
+      P_i & = & \frac{1 - \left(\frac{1-p}{p}\right)^i}{1 - \frac{1-p}{p}}P_1 \text{ where } p \not= \frac{1}{2}\\
+      P_i & = & ip_1 \text{ where } p = \frac{1}{2}\\
+    \end{eqnarray*}
+    Let's use $P_N = 1$
+    $$
+      P_i = \begin{cases}
+        \frac{1 - \left(\frac{1 - p}{p}\right)^i}{1 - \left(\frac{1 - p}{p}\right)^N} & p \not= \frac{1}{2}\\
+        \frac{i}{N} & p = \frac{1}{2}
+      \end{cases}
+    $$
+    Let $p = \frac{1}{2}$, $N = 10$, $i = 5$, $P_i = \frac{1}{2}$.\\
+    Let $p = .6$, $N = 10$, $i = 5$, $P_i = .87$.\\
+    Let $p = \frac{18}{38}$, $N = 1000$, $i = 900$, $P_i = 3 \cdot 10^{-5}$
+
+    \noindent\underline{Best Strategy}: "Bold Play"\\
+      You have amount, $x$ and want to get to $N$. The strategy is as follows:
+      \begin{enumerate}
+        \item Bet $x$ if $x \le \frac{N}{2}$
+        \item Bet $N - x$ if $x \ge \frac{N}{2}$
+      \end{enumerate}
+      You can assume that $N = 1$.\\
+      Let $P(X) = P(\text{get to $N$ before 0})$\\
+      $$
+        P(X) = \begin{cases}
+          p \cdot P(2x) & x \in [0, \frac{1}{2}]\\
+          p \cdot 1 + (1-p) \cdot P(2x - 1) & x \in [\frac{1}{2}, 1]
+        \end{cases}
+      $$
+      We can compute by solving a linear system on $\frac{k}{2^n}$, where $k = 0, \ldots, 2^n$\\
+      Let $n = 1$. $p = P\left(\frac{1}{2}\right)$\\
+      Let $n = 2$. $p^2 = P\left(\frac{1}{4}\right)$, $P\left(\frac{3}{4}\right) = p + (1-p)p$\\
+      Let $n = 3$. $p^3 = P\left(\frac{1}{4}\right)$, 
+        $P\left(\frac{3}{8}\right) = pP\left(\frac{3}{4}\right) = p^2 + p^2(1-p)$,
+        $P\left(\frac{5}{8}\right) = p +  p^2(1-p)$,
+        $P\left(\frac{7}{8}\right) = p +  p(1-p) + p(1-p)^2$.\\\\
+      $P(.9) = .88, \text{ for } p = \frac{12}{38}$\\
+      $P(X) = x$ when $p = \frac{1}{2}$.\\
+    
+    \noindent\underline{Remark}: Look at the function, $P(x)$. Graph it. It's nowhere
+      differentiable, but continuous in its domain. It's highly irregular. It's
+      strictly increasing. You can even solve the recurrence. Let $P(x) = P(Y \le x)$.\\
+      $$
+        Y = \sum_{j = 1}^{\infty} D_j \frac{1}{2^j} \text{ where $D_j$ is the $j$th digit}
+      $$
+      $$
+        P(D_j = 1) = p
+      $$
+      $$
+        P(D_j = 0) = 1- p
+      $$
+
+    \noindent\underline{Example}: Assume that you keep flipping a fair coin until you get
+      heads. Each time you flip tails, roll a die, and collect as many dollars as number
+      shown on the die.\\
+      Let $Y$ be the amount you win. Calculate $EY$, $Var(Y)$.\\
+      We have a sum of iid with random number of terms.\\
+      Let $X_1, X_2, \ldots$ be iid with $EX_1 = \mu$ and $Var(X_1) = \sigma^2$\\
+      Let $N$ be independent of all $X$'s.\\
+      Take 
+      $$
+        S = \sum_{k = 1}^N X_i
+      $$
+      Compute $ES$, $Var(S)$.

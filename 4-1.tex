@@ -1,0 +1,101 @@
+\section*{4/1}
+  From last time,
+  Let there be $n$ tosses of a fair coin and $R_n$ be the longest interval of 
+  heads.\\
+  $$
+    P(R_n \ge k) \le n \frac{1}{2^k}
+  $$
+  $$
+    P(R_n \ge k) \ge 1 - \left(1 - \frac{1}{2^k}\right)^{\lfloor \frac{n}{k}\rfloor}
+  $$
+  \begin{theorem}
+    $$
+      \frac{R_n}{\log_2n} \to 1
+    $$
+    in probability
+  \end{theorem}
+  \begin{proof}
+    Need to show that for any $\epsilon > 0$
+    \begin{eqnarray}
+      P(R_n \ge (1 + \epsilon) \log_2n) & \to & 0\\
+      P(R_n \ge (1 - \epsilon) \log_2n) & \to & 1 
+    \end{eqnarray}
+    \begin{eqnarray*}
+      P\left(\left|\frac{R_n}{\log_2n} - 1\right| \ge \epsilon\right)
+      & = & P\left(\frac{R_n}{\log_2n} \ge 1 + \epsilon \text { or } 
+      \frac{R_n}{\log_2n} \le 1 - \epsilon\right)\\
+      & = & P\left(\frac{R_n}{\log_2n} \ge 1 + \epsilon\right) + P\left(\frac{R_n}{
+      \log_2n} \le 1 - \epsilon\right)\\
+    \end{eqnarray*}
+    Plug in $k = (1 + \epsilon)\log_2n$ to equation (1), you get
+    \begin{eqnarray*}
+      \ldots & \le & n \frac{1}{2^{(1 + \epsilon)\log_2n}}\\
+      & = & n \frac{1}{n^{1 + \epsilon}}\\
+      & = & \frac{1}{n^{\epsilon}}
+    \end{eqnarray*}
+    Plug in $k = (1 - \epsilon)\log_2n$ to equation (2), you get
+    \begin{eqnarray*}
+      \ldots & \ge & 1 - e^{-\frac{1}{2^k} \lfloor\frac{n}{k}\rfloor}\\
+      & \ge & 1 - e^{\frac{-1}{2^k}(\frac{n}{k} - 1)}\\
+      & \ge & 1 - exp(-n^{-(1 - \epsilon)}(\frac{n}{(1 - \epsilon)\log_2n) - 1}\\
+      & = & 1 - exp\left(- n^{\epsilon}\frac{1}{(1 - \epsilon)\log_2n} + \frac{1}{n^{1 - \epsilon}}\right)\\
+      & \to & 1
+    \end{eqnarray*}
+  \end{proof}
+  \begin{theorem}[Markov's inequality]
+    If $X \ge 0$ is any random variables, $P(X > a) \le \frac{1}{a}EX$
+  \end{theorem}
+  \begin{proof}
+    $I\{X \ge a\}$ where this is 1 when the event happens and 0 otherwise.
+    $I\{X \ge a\} \le \frac{1}{a}X$ by Bernoulli
+  \end{proof}
+  \begin{theorem}[Chebyshev's inequality]
+    $EX = \mu$ and $Var(X) = \mu^2$. Otherwise, $X$ is aribitrary.\\
+    Then, 
+    \begin{eqnarray*}
+      P(|X - \mu| \ge k) & \le & \frac{\sigma^2}{k^2}\\
+      P((X - \mu)^2 \ge k^2)& \le & \frac{\sigma^2}{k^2}
+    \end{eqnarray*}
+  \end{theorem}
+  \begin{proof}
+    We need to prove
+    \begin{eqnarray*}
+      P\left(\left|\frac{S_n}{n} - \mu\right|\ge \epsilon\right) & \to & 0\\
+      E\left(\frac{S_n}{n}\right) & = & \frac{1}{n} n\mu = \mu\\
+      Var\left(\frac{S_n}{n}\right)
+    \end{eqnarray*}
+    $$
+      S_n = X_1 + \ldots + X_n \text{ where $X_i$ is aribtrary}
+    $$ 
+    $$
+      ES_n = EX_1 + \ldots + EX_n
+    $$
+    \begin{eqnarray*}
+      Var(S_n) & = & Var(X_1) + \ldots + Var(X_n) + \sum_{i \not= j}Cov(X_i, X_j)\\
+      Cov(X_1, X_j) & = & E(X_iX_j) - EX_i EX_j\\
+      Var(aX) = a^2(n
+    \end{eqnarray*}
+  \end{proof}
+  \begin{theorem}[Weak law of large numbers]
+    Let $X_1, X_2, \ldots$ be a sequence that is iid with $EX_1 = \mu$ and
+    $Var(X_1) = \sigma^2 < \infty$.\\
+    $S_n = X_1 + \ldots + X_n$\\
+    Then, $\frac{S_n}{n} \to \mu$ in probability.
+  \end{theorem}
+  \begin{proof}
+    Rest on the two inequalities:
+    \begin{eqnarray*}
+      P\left(\left|\frac{S_n}{n} - \mu\right| \ge \epsilon\right) 
+      & \le & \frac{1}{\epsilon^2}\cdot \frac{\sigma^2}{n}\\
+      & \to & 0
+    \end{eqnarray*}
+  \end{proof}
+  \underline{example}: Two investment choices at the beginning of each year:
+    \begin{itemize}
+      \item a risk-free "bond" which returns 6\% per year
+      \item a risky "stock" which increases your investment by 50\% with
+        probability .8 and wipes away your money with probability .2
+    \end{itemize}
+    If your money is $s$, then after a year, bond will give you $1.06s$
+    and stock $\begin{cases} 1.5s & \text{ with probability .8}\\
+    0 & \text{ with probabiliy .2}\end{cases}$

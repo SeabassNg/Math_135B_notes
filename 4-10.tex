@@ -1,0 +1,64 @@
+\section*{4/10}
+  Let $N$ be the number of people entering the store. It follows Poisson($\lambda$)\\
+  Each buys something with probability $p$, indepedently.\\
+  Let $X$ be the number of people who buy something.\\
+  Why should $X$ be Poisson? Approximate:\\
+  Let $n$ be the population of the town\\
+  Let $\epsilon$ be the probability that a person enteres the store.\\
+  $\lambda = n\epsilon$.\\
+  Let $N \approx Binomial(n, \epsilon)$.\\
+  Let $X \approx Binomial(n, p\epsilon)$.\\
+  \begin{eqnarray*}
+    P(X=k) & = & \sum_{n = k}^{\infty} P(X = k | N = n)P(N=n)\\
+      & = & \sum_{n = k}^{\infty} \binom{n}{k}p^k(1-p)^{n-k} \frac{\lambda^ne^{-\lambda}}{n!}\\
+      & = & e^{-\lambda} \sum_{n = k}^{\infty}\frac{n!}{k!(n-k)!} p^k (1-p)^{n-k} \frac{\lambda^n}{n!}\\
+      & = & \frac{e^{-\lambda}p^k \lambda^k}{k!} \sum_{n = k}^{\infty} 
+        \frac{(1-p)^{n-k}\lambda^{n-k}}{(n-k)!}\\
+      & = & \frac{e^{-\lambda}(p\lambda)^k}{k!}\sum_{l = 0}^{\infty}\frac{((1-p)\lambda)^l}{l!}\\
+      & = & \frac{e^{-\lambda}(p\lambda)^k}{k!} e^{(1-p)\lambda}\\
+      & = & \frac{e^{-p\lambda}(p\lambda)^k}{k!}
+  \end{eqnarray*}
+  Therefore, it is in fact, Poisson($p\lambda$).\\
+  \underline{Example}: Toss a coin repeatedly with probability of getting heads $p$.\\
+    What is the expected number of times need to get $k$ sucessive heads?\\
+    (\underline{Note}: If you remove "successive", the answer is $\frac{k}{p}$)\\
+    Let $N_k$ be the number of tosses required.\\
+    Let's condition on $N_{k-1}$.\\
+    \begin{eqnarray*}
+      E[N_k | N_{k-1} = m] & = & 
+        p(m+1) + (1-p)(m+1 + E(N_k))\\
+        & = & pm + p + (1-p)m + 1-p + m_k (1 - p)\\
+        & = & m+1 + m_k(1-p)\\
+      m_k = E(N_k) & = & \sum_{m=k-1}^{\infty} E[N_k|N_{k-1}=m] P(N_{k-1} = m)\\
+        & = & \sum_{m=k-1}^{\infty} [m+1 + m_k(1-p)] P(N_{k-1})\\
+        & = & m_{k-1} + 1 + m_k(1-p)\\
+        & = & \frac{1}{p} + \frac{m_{k-1}}{p}\\
+      m_1 & = & \frac{1}{p}\\
+      m_2 & = & \frac{1}{p} + \frac{1}{p^2}\\
+      m_3 & = & \frac{1}{p} + \frac{1}{p^2} + \frac{1}{p^3}\\
+      & \vdots &
+    \end{eqnarray*}
+    \begin{enumerate}
+      \item $p(m+1)$ is the probability that you have heads on the $m+1$ try times
+        its value.
+      \item Otherwise, it's tails and however long it is to get it again
+    \end{enumerate}
+  \underline{Example}: Gambler's ruin\\
+    We have a random walk on the integers.\\
+    For a given spot, you have a probability of $p$ to walk one step forward.\\
+    Otherwise, you walk one step backwards.\\
+    What is your probability reaching $N$ before reaching $0$?\\
+    Call this probability, $P_i$
+    "One step conditioning",
+    \begin{eqnarray*}
+      P_0 & = & 0\\
+      P_N & = & 1\\
+      P_i & = & pP_{i+1} + (1-p)P_{i-1}\\
+      P_{i+1} - P_{i} & = & \frac{1-p}{p} (P_i - P_{i-1})\\
+      P_2 - P_1 & = & \frac{1-p}{p}(P_1 - P_0)\\
+        & = & \frac{1-p}{p}P_1\\
+      P_3 - P_2 & = & \left(\frac{1-p}{p}\right)^2(P_1)\\
+      & \vdots&\\
+      P_N - P_{N-1} & = & \left(\frac{1-p}{p}\right)^{N-1}P_1\\
+      P_i & = & P_1\left(1 + \left(\frac{1-p}{p}\right)+ \left(\frac{1-p}{p}\right)^2+ \ldots+ \left(\frac{1-p}{p}\right)^N\right) 
+    \end{eqnarray*}

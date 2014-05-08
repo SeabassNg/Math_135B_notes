@@ -1,0 +1,98 @@
+\section*{5/1}
+  \subsection*{Random walk in 3 dimensions}
+    Squirrels walk around in a 3 dimensional maze. In this walk, you will walk
+    $2k$ times in the z direction. Otherwise, it's running around in the x and
+    y direction.\\
+
+    It has $\frac{1}{3}$ probability of moving in the z-direction. In those $2k$ 
+    steps, it has a probability, $P(S_{2k}^1 = 0)$ to come back to 0 in the 
+    z-direction. \\
+
+    \begin{eqnarray*}
+      P(S_{2n}^{3} = 0) & = & \sum_{k = n}^n \binom{2n}{2k} 
+        \left(\frac{1}{3}\right)^{2k} \left(\frac{2}{3}\right)^{2(n-k)} 
+        P(S_{2k}^1 = 0)P(S_{2(n-k)}^{(2)} =0 )\\
+      & \approx & \sum_{k = 0}^n \binom{2n}{2k} \left(\frac{1}{3}\right)^{2k} 
+      \left(\frac{2}{3}\right)^{2(n-k)} \frac{1}{\sqrt{n}} \frac{1}{n}\\
+      & = & \frac{1}{n^{3/2}}P(\text{ random walk makes even number of 
+        steps in z direction})\\
+      & \approx & \frac{1}{n^{3/2}} \frac{1}{2} \text{ (solve the binomial as $n \to \infty$)}\\
+      \sum_n P(S_{2n}^{3} = 0) & < & \infty \text{ (so, the 3d random walk is transient)}\\
+    \end{eqnarray*}
+    Another way:
+    \begin{eqnarray*}
+      f_0 & = & \text{ probability of return to 0}\\
+      \frac{1}{1 - f_0} & = & \sum_{n = 0}^{\infty} (P_{2n}^{(3)} = 0)\\
+      & = & 1 + \frac{1}{6} + \ldots\\
+      & = & \frac{1}{(2\pi)^3} \int_{(-\pi, \pi)^3} \frac{\,dx\,dy\,dz}{
+        1 - \frac{1}{3}(\cos(x) + \cos(y) + \cos(z))} 
+        \text{ (take an analysis course for why this is)}\\
+    \end{eqnarray*}
+    Aside, 
+    Let $X = Binomial(n,p)$ random variables.\\
+    $$
+      p_n = P(X\text{ is even}) = \frac{1}{2}
+    $$
+    Why?
+    \begin{eqnarray*}
+      p_0 & = & 1\\
+      p_{n + 1} & = & p_n (1 - p) + (1 - p_n) p\\
+        & = & p + p_n (1 - 2p)\\
+    \end{eqnarray*}
+    Since we know it's $\frac{1}{2}$,
+    $$
+      p_n = \frac{1}{2} + c (1 - 2p)^n 
+    $$
+    $$
+      1 = \frac{1}{2} + c, c = \frac{1}{2}
+    $$
+    So,
+    $$
+      p_n = \frac{1}{2} + \frac{1}{2} (1 - 2p)^n
+    $$
+    Plug this is all into the stuff and we get
+    $$
+      f_0 \approx .3405
+    $$
+    \underline{Remark}: A Markov chain can never leave a recurrent class, which is
+    therefore often called \underline{closed}. 
+    \begin{proof}
+      Let $C$ be a recurrent class, $i \in C$ and $j \not\in C$. We need to show that
+      $p_{ij} = 0$.\\
+
+      Assume not, $p_{ij} > 0$. As $j$ does not communicate with $i$, the chain
+      never reaches $i$ from $j$ ($i$ is not accessible from $j$).\\
+
+      If the chain starts at $i$, it returns to there infinitely many times, so it
+      eventually jumps to $j$ and never returns. CONTRADICTION!
+    \end{proof}
+
+  \subsection*{Branching processes}
+    Unlike random walks problem, it has no spatial constraints.\\
+
+    Consider a population of individuals which evolves according to the following
+    rule: Each individual generation, $n$ produces a random number of 
+    offsprings in the next generation independently from other individuals.\\
+
+    $$
+      P_i = P(\text{ number of offspring} = i)
+    $$
+    $i = 0, 1, 2, \ldots$\\
+    
+    Problem introduced by F. Galton (late 1800s). \\
+
+    We will start with a single individual and they will produce offsprings.
+    The graph of this structure is called a "Family tree".\\
+
+    Let $X_n$ be the number of individuals in generation $n$ and $p_i$ be
+    a probability mass function of the number of offsprings individual $i$
+    will produce.
+    \underline{Notes}:
+    \begin{enumerate}
+      \item If $X_n$ reaches 0, it's an absorbing state.
+      \item $P(X_{n+1} = 0 | X_n = k) > 0$ provided $p_0^k > 0$
+      \item Therefore, all states other than 0 are transient.
+    \end{enumerate}
+    \begin{eqnarray*}
+      P(X_{n+1} = i | X_n = k) & = & P(S_1 + S_2 + \ldots + S_k = i)\\
+    \end{eqnarray*}

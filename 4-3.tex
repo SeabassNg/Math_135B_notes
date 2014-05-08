@@ -1,0 +1,75 @@
+\section*{4/3}
+  "hedging" - invest a fixed proportion $x$ into the stock and
+  $1 - x$ into the bond. (We know that when $x = 1$, you will 
+  eventually lose everything.)\\
+  Average growth is
+  $$
+    \lambda = \lim_{n \to \infty} \frac{1}{n} \log\frac{x_n}{x_0}
+  $$
+  where $x_n \approx x_0 e^{\lambda n}$.\\
+  $x_n$ is your capital at the end of year $n$.\\
+  $I_i = I\{$ stocks goes up in year $i \}$.\\
+  They are independent indicators with $EI_i = .8$.\\
+  \begin{eqnarray*}
+    x_n & = & x_{n-1}(1-x)\cdot 1.06 + x_{n-1} \cdot x \cdot 1.5 \cdot I_n\\
+      & = & x_{n-1}(1.06(1 - x) + 1.5x \cdot I_n)\\
+      & = & x_0(1.06(1-x) + 1.5x)^{s_n}((1 - x)1.06)^{n - s_n} 
+        \text{ where } s_n = I_1 + \ldots I_n\\
+  \end{eqnarray*}
+  The last step unrolled the recurrence.\\
+  \begin{eqnarray*}
+    \frac{1}{n}\log\frac{x_n}{x_0} & = & \frac{s_n}{n} \log(1.06 + .44x)
+      + (1 - \frac{S_n}{n})\log(1.06(1-x))\\
+      & \to_{n \to \infty} & .8 \log(1.06 + .44x) + .2 \log(1.06(1 - x))\\
+  \end{eqnarray*}
+  To maximize this,
+  $$
+    \frac{.8 \cdot .44}{1.06 + .44x} = \frac{.2}{1-x}
+  $$
+  where $x \in (0,1)$
+  Therefore,
+  $\lambda = \lim_{n \to \infty} \frac{1}{n}\log\frac{x_n}{x_0}$ where
+  $x_n \approx x_0 e^{n\lambda}$.\\\\
+  $e^{\lambda} = 1 + u$\\
+  Solve $x = \frac{7}{22}$ and $\lambda \approx 8.1\%$ and $u = 8.4\%$\\\\
+\underline{Example}:  Distribute $n$ balls independently at random into
+  $n$ boxes. $N_n$ is the number of empty boxes.\\
+  $N_n = I_1 + \ldots + I_n$ where $I_i = I\{ i$th box is empty$\}$\\
+  You would use weak law of large number, but they're not independent.\\
+  $$
+    EI_i = \left(\frac{n-1}{n}\right)^n = \left(1 - \frac{1}{n}\right)^n \to e^{-1}
+  $$
+  $$
+    E(N_n^2) = EN_n + \sum_{i \not= j} E(I_iI_j)
+  $$
+  $$
+    E(I_iI_j) = P(\text{both box $i$ and $j$ are empty}) = \left(\frac{n - 2}{n}\right)^n
+  $$
+  $$
+    Var(N_n) = E(N_n^2) - (EN_n)^2 = n\left(1 - \frac{1}{n}\right)^n + 
+    n(n-1)\left(1 - \frac{2}{n}\right)^n - n^2 \left(1 - 
+    \frac{1}{n}\right)^{2n}
+  $$
+  By chebyshev's inequality,
+  \begin{eqnarray*}
+    P\left(\left|\frac{1}{n}N_n - \frac{1}{n}EN_n\right| \ge \epsilon\right)
+      & \le & \frac{1}{\epsilon^2} \frac{1}{n^2} VarN_n\\
+      & = & \frac{1}{\epsilon^2}\left(\frac{1}{n}\left(1 - \frac{1}{n}\right)^n 
+        + \frac{n-1}{n}\left(1 - \frac{2}{n}\right)^n - \left(1 - 
+        \frac{1}{n}\right)^{2n}\right)\\
+      & \to_{n \to \infty} & \frac{1}{\epsilon^2}(0 + e^{-2} - e^{-2})\\
+      & = & 0
+  \end{eqnarray*}
+  This implies that $P\left(\left|\frac{1}{n}N_n - e^{-1}\right| > 
+  \epsilon \right) \to 0$
+
+\subsection*{Moment Generating functions and Central Limit Theorems}
+  If $X$ is a random variable, then its \underline{moment generating 
+  function} is 
+  $$
+    \phi(t) = \phi_X(t) = E(e^{tX}) = 
+    \begin{cases} 
+      \sum_x e^{tx} P(X=x) & \text{ discrete}\\
+      \int_{-\infty}^{\infty} e^{tx} f_X(x) \,dx & \text{ continuous}\\
+    \end{cases}
+  $$

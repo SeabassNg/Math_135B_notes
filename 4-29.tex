@@ -1,0 +1,78 @@
+\section*{4/29}
+  \subsection*{Continued from last time}
+    \begin{eqnarray*}
+      P_{00}^{2n - 1} & = & 0\\
+      P_{00}^{2n} & = & \binom{2n}{n} p^n (1 - p)^n\\
+        & \approx & \frac{2^{2n}}{\sqrt{n\pi}} p^n (1 - p)^n\\
+        & = & \frac{1}{\sqrt{n\pi}} (4p(1-p))^n
+    \end{eqnarray*}
+    When $p = \frac{1}{2}$, $P_{00}^{2n} \approx 
+      \frac{1}{\sqrt{n\pi}}$, $\sum_{n = 0}^{\infty} P_{00}^{2n} = 
+      \infty$, so random walk is continuous.\\
+    When $p \not= \frac{1}{2}$ , $P_{00}^{2n} \approx 
+      \frac{1}{\sqrt{n\pi}}$, $\sum_{n = 0}^{\infty} P_{00}^{2n} <
+      \infty$, so random walk is transient.\\
+    Question: What is the $f_0 = P($ ever reenter 0 $| X_0 = 0)$?\\
+    Gambler's ruin!\\
+    Recall that
+    $$
+      P(\text{reach $N$ before 0} | S_0^{(1)} = 1) = 
+      \begin{cases}
+        \frac{1}{N} & p = \frac{1}{2}\\
+        \frac{1 - \frac{1-p}{p}}{1 - \left(\frac{1 - p}{p}\right)^N}
+        & \text{ otherwise}
+      \end{cases}
+    $$
+    Also, that $P(\text{reach 0 before $N$ }| S_0^{(1)} = 1) = 
+    1 - P(\text{reach $N$ before 0 }| S_0^{(1)} = 1)$.\\
+    Let's send $N \to \infty$,
+    $$
+      P(\text{ever reach 0}| S_n^{(1)} = 1) =
+      \begin{cases}
+        1 & p = \frac{1}{2}\\
+        1 & p < \frac{1}{2}\\
+        \frac{1-p}{p} & p > \frac{1}{2}\\
+      \end{cases}
+    $$
+    Assume that $p > \frac{1}{2}$. Then,
+    \begin{eqnarray*}
+      f_0 & = & P(\text{1st jump to 1 and it returns eventually}) +
+      P(\text{1st jump to -1 and it returns eventually})\\
+      & = & p\frac{1-p}{p} + (1-p)1 \\
+      & = & 2(1-p)\\
+    \end{eqnarray*}
+
+  \subsection*{2 dimensional case}
+    Drunk at Chicago problem. Drunk goes wandering around Chicago.
+    What is the probability that the drunk comes back home?\\
+    Let $S_n^{(2)}$ be the sequence of random walk.\\
+    Let $k$ be the number of times walk moves in the $x$-direction.
+    \begin{eqnarray*}
+      P(\text{back at home(0,0) in $2n$ steps})
+      & = & \sum_{k = 0}^n \binom{2n}{2k} \frac{1}{2^{2n}} 
+        P(S_{2k}^{(1)} = 0) P(S_{2(n-k)}^{(1)} = 0)\\
+    \end{eqnarray*}
+    With overwhelming probability, $k \approx \frac{n}{2}$.\\
+    Then,
+    \begin{eqnarray*}
+      P(S_{2k}^{(1)} = 0) & \approx & \frac{1}{\sqrt{n}}\\
+      P(S_{2(n - k)}^{(1)} = 0) & \approx & \frac{1}{\sqrt{n}}\\
+      P(\text{back at home(0,0) in $2n$ steps})
+        & \approx & \frac{1}{n} \sum_{k = 0}^n \binom{2n}{2k} 
+          \frac{1}{2^{2n}} \\
+        & \approx & \frac{1}{n}\\
+    P(\text{even number of steps in horizontal direction}) &\to& 
+      \frac{1}{2}\\
+      \sum_{n = 0}^{\infty}P(\text{back to (0,0) n(2n) step}) &=& 
+      \infty
+    \end{eqnarray*}
+    So, the chain is still recurrent. In fact,
+    \begin{eqnarray*}
+      P(\text{back to 0 in $2n$ steps})
+      & = & P(S_{2n}^{(1)} = 0)^2\\
+    \end{eqnarray*}
+
+  \subsection*{Random walk in 2 dimension with diagonals}
+    Different random walk, but now that different. Rotate the
+    lattice.\\
+    As the two coordinates evolve independently.

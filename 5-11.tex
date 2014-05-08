@@ -1,0 +1,89 @@
+\section*{5/11}
+  For irreducible, finite state Markov Chains
+  \begin{itemize}
+    \item $\frac{N_n(i)}{n} \to \pi_i$ (irreducible)
+    \item $P_{ij}^n \to \pi_j$ (irreducible, aperiodic)
+  \end{itemize}
+  where $[\pi_1 \ldots \pi_n]P = [\pi_1 \ldots \pi_n]$.\\
+
+  \noindent\underline{Example}: The state of Gary\\
+  (figure 5)\\
+  Let Cheerful be state 0, so-so be state 1, and glum be state 2.
+  Then, his transition matrix is
+  $$
+    P = \left(
+      \begin{array}{c c c}
+        .5 & .4 & .1\\
+        .3 & .4 & .3\\
+        .2 & .3 & .5\\
+      \end{array}
+    \right)
+  $$
+  From an initial observation, we can see it's irreducible and aperiodic.\\
+  In the long run, what proportion of time is Gary in each state?
+  \begin{eqnarray*}
+    \pi_c + \pi_s + \pi_g & = & 1\\
+    (\pi_c, \pi_s, \pi_g)P & = & (\pi_c, \pi_s, \pi_g)\\
+  \end{eqnarray*}
+  Solve for $Kern(P - I)^T$. This implies that $\pi_c = \frac{21}{62}$,
+  $\pi_s = \frac{23}{62}$, $\pi_g = \frac{18}{62}$.\\
+
+  \noindent\underline{Example}: The Hardy Weinberg Principle in Genetics.\\
+  (Figure 6)\\
+  Assume that the population has proportion, $p$ of being AA, $q$ of being
+  aa, and $r$ of being Aa.\\
+  Assume mating proceeds by choosing a random individual from population,
+  producing 1 offspring.\\
+  Let $X_n$ be genetic state of the $n^{\text{th}}$ generation.\\
+  Write down $P$ and determine limiting probabilities.\\
+  Let AA be state 0, aa be state 1, and Aa be state 2. Then,
+  $$
+    P =\left(\begin{array}{c c c}
+      p + \frac{r}{2} & 0 & q + \frac{r}{2}\\
+      0 & q + \frac{r}{2} & p + \frac{r}{2}\\
+      \frac{p}{2} + \frac{r}{4} & \frac{q}{2} + \frac{r}{2} & 
+      \frac{p}{2} + \frac{q}{2} + \frac{r}{2}\\
+    \end{array}\right)
+  $$
+  Let $p, q, r = \frac{1}{3}$. Then,
+  $$
+    P =\left(\begin{array}{c c c}
+    \frac{1}{2} & 0 & \frac{1}{2}\\
+    0 & \frac{1}{2} & \frac{1}{2} \\
+    \frac{1}{4} & \frac{1}{4} & \frac{1}{2}\\
+    \end{array}\right)
+  $$
+  Solving for $n$, $\pi_{AA} = \frac{1}{4}$, $\pi_{aa} = \frac{1}{4}$,
+  $\pi_{Aa} = \frac{1}{2}$.\\
+
+  \noindent\underline{Example}: Random walk on a cube. Let each vertex
+  of the cube be a state.\\
+  Calculate $\pi_1, \ldots, \pi_8$.\\
+  This is irreduicble with
+  \underline{Conjecture}: 
+  $$
+    \pi_1 = \pi_2 = \ldots = \pi_8 = \frac{1}{8}
+  $$
+  Our transition matrix is
+  $$
+    P = \left(\begin{array}{c c c c c c c c}
+    0 & \frac{1}{3} & 0 & \frac{1}{3} & \frac{1}{3} & 0 & 0 & 0\\
+    \frac{1}{3} & 0 & \frac{1}{3} & 0 &0 & \frac{1}{3} & 0 & 0 \\
+    & \vdots & & & & & & \\
+    \end{array}\right)
+  $$
+  The pattern... if $i$ and $j$ are connected by an edge, then $P_{ij} =
+  P_{ji}$, then $P_{ij} = P_{ji} = \frac{1}{3}$. Then, it's doubly
+  stochastic. not connected by an edge, $P_{ij} = P_{ji} = 0$\\
+  \begin{definition}
+    Let $M$ be a square matrix. It is doubly stochastic if the sum of
+    the rows is 1 and the sum of the column is 1.
+  \end{definition}
+  \underline{Fact}: For every doubly stochastic matrix, the invariant measure
+  is $\pi_1 = \ldots = \pi_8 = \frac{1}{8}$.\\
+  \begin{proof}
+    We have a set of DSMs = convex hull of $\{B_1, \ldots, B_{8!}\}$, the permutation
+    matrix.
+    Let $M = c_1B_1 + c_2B_2 + \ldots + c_{8!}B_{8!}$ where $\sum_i c_i = 1$ where 
+    $c_i \ge 0$.
+  \end{proof}

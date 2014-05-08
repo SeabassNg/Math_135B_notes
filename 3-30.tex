@@ -1,0 +1,40 @@
+\section*{3/30}
+  \subsection*{Limit Theorems}
+    Given a sequence of random variables, $Y_1, Y_2, \ldots$,
+    we want to show that "when $n$ is large", $Y_n$ is approximately $f(n)$ for 
+    some simple (deterministic) function, $f(n)$.
+    \begin{definition}
+      A sequence, $Y_1, Y_2, \ldots$, of random variables converges to a number,
+      $a$, \underline{in probability} if $P(|Y_n - a| \le \epsilon)$ converges
+      to 1 for any fixed $\epsilon$. This is equivalent to $P(|Y_n - a| > 
+      \epsilon)$ converges to 0.
+    \end{definition}
+    \underline{Example}:\\
+      \begin{enumerate}
+        \item Let $X_1, X_2, \ldots$ be a sequence of independent and identically
+          distributed (iid) numbers.\\
+          $EX_i = \mu$ and $Var(X_i) = \sigma^2$.\\
+          $S_n = X_1 + \ldots + X_n$.\\
+          When $n$ is large, $\frac{S_n}{n\mu}$ converges to 1 in probability.
+        \item Toss a fair coin $n$ times (independently).\\
+          Let $R_n$ be the "longest runs of heads" or longest substring of 
+          consecutive results of heads. (Results look like HHTTHHHTHTHTHH. 
+          $R_n = 3$ in this case.)\\
+          \begin{eqnarray*}
+            P(R_n \ge 1) & = & P(\text{at least $k$ consecutive result of heads
+              somewhere in the result string})\\
+            & = & P(\bigcup_{i = 1}^{n - k + 1}) \text{ \{$i$ is the first head in an
+              interval of at least $k$ heads\}}\\
+            & \le & n \frac{1}{2^k} 
+          \end{eqnarray*}
+          We discovered the upper bound. Now, for the lower bound.\\
+          Divide the string of size $n$ instead disjoint strings of size $k$i.
+          \begin{eqnarray*}
+            P(R_n \ge k) & \le & P(\text{at least one of the blocks consists of
+              all heads})\\
+              & = & 1 - (1 - \frac{1}{2^k})^{\lfloor\frac{n}{k}\rfloor}
+          \end{eqnarray*}
+      \end{enumerate}
+      \begin{theorem}
+        $\frac{R_n}{\log_2n}$ converges to 1 in probability
+      \end{theorem}

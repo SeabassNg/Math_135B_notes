@@ -1,0 +1,128 @@
+\section*{4/15}
+  \underline{Example}:
+    Have a book. Choose a random letter. Then, at each step, either
+    \begin{enumerate}
+      \item Pick another random letter (Markov)
+      \item choose a random occurence of the person's letter, then 
+        pick next letter (next letter to last is the 1st letter).
+        (is also Markov)
+      \item Choose a random occurence of the last two letters, in 
+        order, then pick next letter (not Markov, but becomes
+        Markov if you keep track of two letters)
+      \item Choose a random occurences of all previously chosen
+        letters, in order, then pick next letter (not Markov)
+      \item In step $n$, choose a random letter with probability
+        $\frac{1}{n}$ and do $(2)$ with probability, $1 - 
+        \frac{1}{n}$
+    \end{enumerate}
+    Let $X_0, X_1, \ldots$ be a sequence of discrete random 
+    variables with random variables with values, most often, $0, 1, 
+    2,\ldots$. The information about the Markov chain is given by
+    the \underline{transition probabilities},
+    $$
+      P_{ij} = P(X_{n+1} = j | X_n = i)
+    $$
+    There is also a \underline{transition matrix} represented by
+      $\left[
+        \begin{array}{c c c c} 
+          P_{11} & P_{12} & P_{13} & \ldots\\
+          P_{21} & P_{22} & P_{23} & \ldots\\
+          &\vdots & &\\
+        \end{array}
+      \right]$.\\
+    This is also known as a stochastic matrix. Row sums are 1.\\
+
+    \noindent\underline{Example}: The random moves to the right (by 1)
+      with probability, $p$, and to the left with probability $1-p$,
+      except when it at 0 or 4. These two states are \underline{absorbing}
+      once there, the walker does not move.
+      $$
+        P = \left[
+        \begin{array}{c c c c c} 
+          1 & 0 & 0 & 0 & 0 \\
+          1 - p & 0 & p & 0 & 0\\
+          0 & 1 - p & 0 & p & 0\\
+          0 & 0 & 1-p & 0 & p\\
+          0 & 0 & 0 & 0 & 1
+        \end{array}
+      \right]
+      $$
+
+    \noindent\underline{Example}: Same as the previous example except that 0 or
+    4 are \underline{reflecting}. From 0, always move to 1. From 4, always move 
+    to 3.
+    $$
+        P = \left[
+        \begin{array}{c c c c c} 
+          0 & 1 & 0 & 0 & 0 \\
+          1 - p & 0 & p & 0 & 0\\
+          0 & 1 - p & 0 & p & 0\\
+          0 & 0 & 1-p & 0 & p\\
+          0 & 0 & 0 & 1 & 0
+        \end{array}
+      \right]
+      $$
+
+    \noindent\underline{Example}: A general random walk on a graph, 
+      walker moves to a randomly chosen neighbor. I have a graph with
+      4 nodes, $a, b, c, d$. Here's an adjacency matrix of their movements.
+      $$
+      \left[
+        \begin{array}{c c c c} 
+          0 & 1 & 0 & 1\\
+          1 & 0 & 1 & 1\\
+          0 & 1 & 0 & 1 \\
+          1 & 1 & 1 & 0 
+        \end{array}
+      \right]
+      $$
+      It has the following transition matrix
+      $$
+      P = \left[
+        \begin{array}{c c c c} 
+          0 & \frac{1}{2} & 0 & \frac{1}{2}\\
+          \frac{1}{3} & 0 & \frac{1}{3} & \frac{1}{3}\\
+          0 & \frac{1}{2} & 0 & \frac{1}{2} \\
+          \frac{1}{3} & \frac{1}{3} & \frac{1}{3} & 0 
+        \end{array}
+      \right]
+      $$
+
+    \noindent\underline{Example}: I have a graph with two nodes.
+      Node 0 transitions to node 0 with probability $\alpha$\\
+      Node 0 transitions to node 1 with probability $1-\alpha$\\
+      Node 1 transitions to node 1 with probability $\beta$\\
+      Node 1 transitions to node 0 with probability $1 - \beta$\\
+      Here is the transition matrix
+      $$
+        P = \left[ 
+          \begin{array}{c c} 
+            \alpha & 1 - \alpha\\
+            1 - \beta & \beta\\
+          \end{array}
+        \right]
+      $$
+
+    \noindent\underline{Example}: "Changeover" Keep track of two toss sequences
+      in an infinite sequence of coin tosses with probability $p$ of heads.
+      $$
+        \left[ 
+          \begin{array}{c c c c c} 
+            States & HH & HT & TH & TT\\
+            HH & p & 1 - p & 0 & 0\\
+            HT & 0 & 0 & p & 1 - p\\
+            TH & p & 1 - p & 0 & 0\\
+            TT & 0 & 0 & p & 1 - p\\
+          \end{array}
+        \right]
+      $$
+      The horizontal axis is the current flip and the previous flip. The 
+      vertical axis is the previous two flips.\\
+
+    \noindent\underline{Example}: Random walk on $\mathbb{Z}$.\\
+
+    \noindent\underline{Example}: Birth-death chain. Let's say my population
+    is $X$. Assume it absorbs at 0. We have a probability $p_x$ be the 
+    probability of birth and $q_x$ be the probability of death and $r_x$
+    be the probability of death and birth. The transition matrix is pretty much
+    a diagonal.

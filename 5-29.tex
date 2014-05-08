@@ -1,0 +1,94 @@
+\section*{5/29}
+  \subsection*{Poisson process}
+    "Tossing low probability coins very fast."\\
+    Mark an $x$ at each multiple of $\frac{1}{n}$ with probability 
+    $\frac{\lambda}{n}$ as $n \to \infty$
+    $P(\text{number of events in interval of length $k$} \ldots$
+    $T_n$ are independently and identically distributed $exp(\lambda)$ and
+    $ET_n = \frac{1}{x}$.\\
+    Let $S_n = T_1 + \ldots + T_n$ be the waiting time for $n^{\text{th}}$ 
+    event.\\
+    Compute the density of $S_n$.\\
+    (We know that $ES_n = \frac{n}{\lambda}$)\\
+    \begin{eqnarray*}
+      P(S_n > t) & = & P(N(t) < n) = \sum_{j = 0}^{n-1} e^{-\lambda t} \frac{
+      (\lambda t)^j}{j!}\\
+     -f_{S_n}(t) & = & \sum_{j = 0}^{n - 1} \frac{1}{j} (-\lambda e^{-\lambda t}
+     (\lambda t)^j + e^{-\lambda t} j (\lambda t)^{j - 1} \lambda)\\
+     & = & \lambda e^{-\lambda t} \sum_{j = 0}^{k - 1} (-\frac{(\lambda t)^j}
+     {j!} + \frac{(\lambda t)^{j - 1}}{(j-1)!}\\
+     & = & - \lambda e^{-\lambda t} \frac{(\lambda t)^{n-1}}{(n-1)!}
+     f_{S_n}(t) = \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n -1)!}
+   \end{eqnarray*}
+   Above result is called Gamma distrubtion.\\\\
+   \underline{example}: Poisson process with rate $\lambda$.\\
+   \begin{eqnarray*}
+    E(\text{time of 10th event}) & = & \frac{10}{\lambda}\\
+    P(\text{10th event occurs 2 or more time units after 9th event}) & = & e^{-2\lambda}\\
+    P(\text{10th event occurs later than time 20}) & = & \int_{20}^{\infty} 
+    \lambda e^{-\lambda t} \frac{(\lambda t)^9}{9!}\,dt\\
+    & = & P(S_{10} > 20)\\
+    & = & P(N(20) < 10)\\
+    & = & \sum_{j = 0}^9 e^{-20\lambda} \frac{(20\lambda)^j}{9!}\\
+   \end{eqnarray*}
+   \begin{eqnarray*}
+    P(\text{2 events in $[1, 4)$ and 3 events in $[3,5]$})
+      & = & \sum_{k = 0}^2 P( \ldots | \text{$k$ events in $[3, 4]$}) 
+        P(\text{$k$ events in $[3, 4]$})\\
+      & = & \sum_{k = 0}^{2} P(\text{$2 - k$ events in $(1, 3]$ and $3 - k$
+      events in $[4, 5]$)} \\
+      & & P(\text{$k$ events in $[3,4]$})\\
+      & = & \sum_{k = 0}^2 e^{-2\lambda} \frac{(2\lambda)^{2 - k}}{(2 - k)!}
+        e^{-\lambda}\frac{\lambda^{3 - k}}{(3 - k)!} e^{-\lambda}
+        \frac{\lambda^k}{k!}\\
+      & = & e^{-4\lambda}(\frac{1}{3} \lambda^5 + \lambda^4 + \lambda^3)\\
+   \end{eqnarray*}
+   \subsection{Superposition}
+    Two \underline{independent} Poisson processes with $\lambda_1$ and 
+    $\lambda_2$ can be combined into a single Poisson process with rate 
+    $\lambda_1 + \lambda_2$.\\
+    $N_1(t) + N_2(t) = N(t)$.\\
+   \subsection*{Thinning}
+    Flip a coin with probability $p$ for heads for every event in a Poisson 
+    process. Call Type I events for those with heads and Type II events for 
+    those with tails. \\
+    Let $N_1(t)$ be the number of Type I events in $[0, t]$.\\
+    Let $N_2(t)$ be the number of Type II events in $[0, t]$.\\
+    These are both Poisson processes with parameter $\lambda p$ and 
+    $\lambda(1-p)$, respectively.\\
+    Further, these two processes are independent.\\
+    \underline{Idea}: Discretize.\\
+      construct Type I process by flipping $\frac{p\lambda}{n}$, coins at 
+      multiples of $\frac{1}{n}$. Then, construct type II process by flipping
+      $\frac{\lambda(1 - p)}{n}$ coins on the remaining points. Send $n \to
+      \infty$.\\
+
+    \noindent\underline{Example}: Customer arrive at a store at rate 10/hr.
+      Each are either male or female with probability $\frac{1}{2}$. Assume that
+      you know that exactly 10 women entered within some hour (say 10 - 11am).
+      (a) Compute the probability that exactly 10 men also entered.\\
+
+    \noindent They're completely independent Poisson process. Parameter is
+      $\frac{1}{2} \cdot  10 = 5$, so our answer is
+      $$
+        e^{-5} \frac{5^{10}}{10!}
+      $$
+
+    \noindent Compute the probability that at least 20 customers have entered.\\
+
+    $$
+      = \sum_{k = 10}^{\infty} P(\text{$k$ men entered}) = \sum_{10}^{\infty}
+        e^{-5} \frac{5^k}{k!}
+    $$
+
+    \noindent \underline{Example}: Assume that cars arrive at rate, 10 / hr. 
+      Assume each car will pick up a hitchhiker with probability $\frac{1}{10}$.
+      You are 2nd in line. What is the probability tht you'll have to wait for 
+      more than 2 hours?\\
+
+    \noindent Cars that pick up are a Poisson process with rate $10 \cdot 
+      \frac{1}{10} = 1$.\\
+      $\lambda = 2$ because average is 1 and time is 2.
+      $$
+        P(T_1 + T_2 > 2) = P(N(2) \le 1) = e^{-\lambda t} (1 + \lambda t) = e^{-2}(1 + 2) = 3e^{-2}
+      $$

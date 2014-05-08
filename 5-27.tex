@@ -1,0 +1,70 @@
+\section*{5/27}
+  \subsection*{Poisson Process}
+    A \underline{counting process}, $N(t) \ge 0$ is a random process with
+    \begin{enumerate}
+      \item $N(t)$ is nonnegative integer values
+      \item $N(t)$ increases in $t$
+    \end{enumerate}
+    $N(t) - N(s) = $ Number of events in $[s, t]$.\\
+    $N(t)$ is right-continuous?)\\
+    \begin{definition}
+      A \underline{Poisson process} with \underline{rate} (aka 
+      \underline{intensity}) $\lambda > 0$ is a counting process $N(t)$ such
+      that
+      \begin{enumerate}
+        \item $N(0) = 0$
+        \item It has independent increments: if $(s_1, t_1] \bigcap (s_2, t_2]
+          = \emptyset$, then $N(t_1) - N(s_1)$ and $N(t_2) - N(s_2)$ are 
+          independent
+        \item Number of events in any interval of length, $t$, is 
+          $Poisson(\lambda t)$, i.e. $P(N(t+s) - N(s) = k) = e^{-\lambda t}
+          \frac{(\lambda t)^k}{k!}$, $i = 0, 1, 2, \ldots$. $E(N(t + s) - N(s))
+          = \lambda t$
+      \end{enumerate}
+    \end{definition}
+    
+  \subsection*{Review of Exponential random variables}
+    $X$ is $exp(\lambda)$ means that
+    \begin{eqnarray*}
+      f_X(x) & = & \begin{cases} \lambda e^{-\lambda x} & x \ge 0\\ 0 & x < 0 \end{cases}\\
+      P(X \ge x) & = & e^{-\lambda x}, x > 0\\
+      E(X) & = & \frac{1}{\lambda}\\
+      Var(X) & = & \frac{1}{\lambda^2}\\
+      P(X > s + t | X > t) & = & P(X > s)
+    \end{eqnarray*}
+    The last equation is known as the "memoryless" property.
+
+  \subsection*{Review of Poisson random variables}
+    $X$ is $Poisson(\lambda)$ means that 
+    \begin{eqnarray*}
+      P(X = k) & = & e^{-\lambda}\frac{\lambda^k}{k!}, k = 0, 1, \ldots\\
+      EX & = & \lambda\\
+      Var(X) & = & \lambda\\
+    \end{eqnarray*}
+    If $X_i$ is $Poisson(\lambda_i)$ and indpendent, then $X_1 + \ldots + X_n$ is
+      $Poisson(\lambda_1 + \ldots + \lambda_n)$. (Superposition property)\\
+    If $X$ is $Poisson(\lambda)$ and $I_i$ are independent indicators with $P(I_i
+      = 1) = p$, then $\sum_{i = 1}^x I_i$ is $Poisson(\lambda p)$. (thinning 
+      property)\\
+    Figure 12\\
+    $P(N(h) = 1) = e^{-\lambda h} \lambda h \approx \lambda h$ as $h \to 0$.\\
+    $P(N(h) \ge 2) = O(h^2) < \lambda h$\\
+    This is why $\lambda$ is called rate.\\\\
+    In fact, we could construct a Poisson process in the following way: Any integer
+    multiple of $\frac{1}{n}$.\\
+    Toss a coins with heads probability $\frac{\lambda}{n}$. Mark the location of heads.\\
+    Let $N_n(t)$ be the number of heads on $[0, t]$.\\
+    When $n \to \infty$, $N_n(t)$ converges to a Poisson process with rate $\lambda$.\\
+    Number of heads is $Binomial(nt \pm 1, \frac{\lambda}{n}) \approx Poisson(\lambda t)$.\\\\
+    
+    \noindent Let $T_1, T_2, \ldots$ be the \underline{interarrival times} where $T_n$ be the
+    time elapses between $(n-1)'s$ and $n'th$ event. (like buses coming).\\
+    \begin{proposition}
+      $T_1, T_2, \ldots$ are independent and distributed $exp(\lambda)$.
+    \end{proposition}
+    \begin{proof}
+      $P(T_1 > t) = P(N(t) = 0) e^{-\lambda t}$\\
+      $P(T_2 > t | T_1 = s) = P(\text{no events in }(s, s + t] | T_1 = s) = 
+      P(N(t) = 0) = e^{-\lambda t}$. It does not matter what happen between 
+      0 and $s$.\\
+    \end{proof}
